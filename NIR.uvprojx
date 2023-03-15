@@ -439,6 +439,11 @@
               <FileType>5</FileType>
               <FilePath>.\DATA_INTERFACE.h</FilePath>
             </File>
+            <File>
+              <FileName>REGISTER_SPACE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\REGISTER_SPACE.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

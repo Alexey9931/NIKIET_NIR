@@ -17,4 +17,5 @@
   TIMER.h \
   C:\Users\shishov\AppData\Local\Arm\Packs\Keil\MDR1986BExx\1.5\Libraries\MDR1986BE4_StdPeriph_Driver\inc\MDR32F9Qx_timer.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h PORTS.h \
-  DATA_INTERFACE.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h
+  DATA_INTERFACE.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  REGISTER_SPACE.h

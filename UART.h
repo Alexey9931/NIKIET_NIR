@@ -9,6 +9,7 @@
 
 void UARTInit(void);
 void UART_send_string(char *data);
+void UART1_IRQHandler(void);
 
 #endif /*__UART_H */
 

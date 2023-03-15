@@ -54,7 +54,7 @@ void TIMER1_IRQHandler(void)
 	
 	//отправка данных по протоколу
 	uint8_t data[] = "123456789";
-	send_data(0x1, 0x1, 0x2, 0x2, 0x1, data, sizeof(data)/sizeof(data[0])-1, 1);
+	//MODBUS_send_data(0x1, 0x1, 0x2, 0x2, 0x1, data, sizeof(data)/sizeof(data[0])-1, 1);
   TIMER_ClearITPendingBit(MDR_TIMER1, TIMER_STATUS_CNT_ZERO);
 }
 

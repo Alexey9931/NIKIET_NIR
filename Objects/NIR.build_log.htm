@@ -22,7 +22,7 @@ Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
 D:\Gorlov\NIR\NIR.uvprojx
-Project File Date:  03/07/2023
+Project File Date:  03/15/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.18', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
@@ -56,10 +56,14 @@ main.c(4): warning: In file included from...
 #endif /*__PORTS_H */
                      ^
 main.c(5): warning: In file included from...
-./DATA_INTERFACE.h(20): warning: no newline at end of file [-Wnewline-eof]
+./DATA_INTERFACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__DATA_INTERFACE_H */
                               ^
-6 warnings generated.
+main.c(6): warning: In file included from...
+./REGISTER_SPACE.h(10): warning: no newline at end of file [-Wnewline-eof]
+#endif /*__REGISTER_SPACE_H */
+                              ^
+7 warnings generated.
 compiling main.c...
 TIMER.c(1): warning: In file included from...
 ./TIMER.h(5): warning: In file included from...
@@ -86,9 +90,9 @@ TIMER.c(1): warning: In file included from...
 ./TIMER.h(16): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__TIMER_H */
                      ^
-TIMER.c(57): warning: implicit declaration of function 'send_data' is invalid in C99 [-Wimplicit-function-declaration]
-        send_data(0x1, 0x1, 0x2, 0x2, 0x1, data, sizeof(data)/sizeof(data[0])-1, 1);
-        ^
+TIMER.c(56): warning: unused variable 'data' [-Wunused-variable]
+        uint8_t data[] = "123456789";
+                ^
 TIMER.c(4): warning: no previous extern declaration for non-static variable 'TIMERInitStruct' [-Wmissing-variable-declarations]
 TIMER_CntInitTypeDef TIMERInitStruct;
                      ^
@@ -202,16 +206,23 @@ UART.c(1): warning: In file included from...
 C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Libraries/MDR1986BE4_StdPeriph_Driver/inc\MDR32F9Qx_uart.h(31): warning: padding size of 'UART_InitTypeDef' with 2 bytes to alignment boundary [-Wpadded]
 typedef struct
         ^
-UART.c(8): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+UART.c(11): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
 UART_InitTypeDef UART_InitStructure;
                  ^
-UART.c(38): warning: no newline at end of file [-Wnewline-eof]
-}
- ^
-UART.c(33): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+UART.c(39): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
         for (int i = 0; i < strlen(data); i++)
                         ~ ^ ~~~~~~~~~~~~
-6 warnings generated.
+UART.c(57): warning: implicitly declaring library function 'sprintf' with type 'int (char *, const char *, ...)' [-Wimplicit-function-declaration]
+                                sprintf(RX_byte,"%c",rx_byte);
+                                ^
+UART.c(57): note: include the header <stdio.h> or explicitly provide a declaration for 'sprintf'
+UART.c(60): warning: implicit declaration of function 'MODBUS_read_request_and_send_response' is invalid in C99 [-Wimplicit-function-declaration]
+                                MODBUS_read_request_and_send_response(rx_data, rx_data_size);
+                                ^
+UART.c(72): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+8 warnings generated.
 compiling UART.c...
 PORTS.c(1): warning: In file included from...
 ./PORTS.h(4): warning: In file included from...
@@ -247,63 +258,110 @@ PORT_InitTypeDef GPIO_init_struct;
 6 warnings generated.
 compiling PORTS.c...
 DATA_INTERFACE.c(1): warning: In file included from...
-./DATA_INTERFACE.h(20): warning: no newline at end of file [-Wnewline-eof]
+./DATA_INTERFACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__DATA_INTERFACE_H */
                               ^
-DATA_INTERFACE.c(27): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+DATA_INTERFACE.c(2): warning: In file included from...
+./REGISTER_SPACE.h(10): warning: no newline at end of file [-Wnewline-eof]
+#endif /*__REGISTER_SPACE_H */
+                              ^
+DATA_INTERFACE.c(29): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
         address_receiver = (receiver_chassis_addr << 4) | receiver_mod_addr;
                          ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(28): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+DATA_INTERFACE.c(30): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
         address_sender = (sender_chassis_addr << 4) | sender_mod_addr;
                        ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(39): warning: variable length array used [-Wvla]
+DATA_INTERFACE.c(41): warning: variable length array used [-Wvla]
         uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
                     ~~~~^~~~~~~~~
-DATA_INTERFACE.c(49): warning: implicitly declaring library function 'strcat' with type 'char *(char *, const char *)' [-Wimplicit-function-declaration]
+DATA_INTERFACE.c(51): warning: implicitly declaring library function 'strcat' with type 'char *(char *, const char *)' [-Wimplicit-function-declaration]
                 strcat(data_in_bytes,array);
                 ^
-DATA_INTERFACE.c(49): note: include the header <string.h> or explicitly provide a declaration for 'strcat'
-DATA_INTERFACE.c(49): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+DATA_INTERFACE.c(51): note: include the header <string.h> or explicitly provide a declaration for 'strcat'
+DATA_INTERFACE.c(51): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
                 strcat(data_in_bytes,array);
                        ^~~~~~~~~~~~~
-DATA_INTERFACE.c(53): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+DATA_INTERFACE.c(55): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
         sprintf(DATA,"%x| %x| %x| %x %x| %x| %x| %s| %x %x %x %x| %x %x",header, address_receiver, address_sender, buf[1], buf[2], service_byte, cmd, data_in_bytes, (uint8_t)(checksum>>24), (uint8_t)(checksum>>16), (uint8_t)(checksum>>8), (uint8_t)checksum, (uint8_t)(end>>8), (uint8_t)end);
                 ^~~~
 C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
 extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
                                                   ^
-DATA_INTERFACE.c(55): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+DATA_INTERFACE.c(57): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
         strcat(DATA, "\r");
                ^~~~
-DATA_INTERFACE.c(56): warning: implicit declaration of function 'UART_send_string' is invalid in C99 [-Wimplicit-function-declaration]
+DATA_INTERFACE.c(58): warning: implicit declaration of function 'UART_send_string' is invalid in C99 [-Wimplicit-function-declaration]
         UART_send_string(DATA);
         ^
-DATA_INTERFACE.c(39): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+DATA_INTERFACE.c(41): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
         uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
                 ^
-DATA_INTERFACE.c(34): warning: variable 'service_byte' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+DATA_INTERFACE.c(36): warning: variable 'service_byte' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
         else if (device == 1)
                  ^~~~~~~~~~~
-DATA_INTERFACE.c(43): note: uninitialized use occurs here
+DATA_INTERFACE.c(45): note: uninitialized use occurs here
         buf[3] = service_byte;
                  ^~~~~~~~~~~~
-DATA_INTERFACE.c(34): note: remove the 'if' if its condition is always true
+DATA_INTERFACE.c(36): note: remove the 'if' if its condition is always true
         else if (device == 1)
              ^~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(20): note: initialize the variable 'service_byte' to silence this warning
+DATA_INTERFACE.c(22): note: initialize the variable 'service_byte' to silence this warning
         uint8_t service_byte; //сервисный байт
                             ^
                              = '\0'
-DATA_INTERFACE.c(71): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
+DATA_INTERFACE.c(82): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+                data_length = (data_length << 8) | MODBUS_read_byte(data, pos);
+                            ~ ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DATA_INTERFACE.c(95): warning: variable length array used [-Wvla]
+        uint8_t DATA[DATA_length]; // массив поля данных в байтах
+                     ^~~~~~~~~~~
+DATA_INTERFACE.c(116): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+                end = (end << 8) | MODBUS_read_byte(data, pos);
+                    ~ ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DATA_INTERFACE.c(129): warning: variable length array used [-Wvla]
+        uint8_t buf[5 + DATA_length];//буффер для расчета контрольной суммы
+                    ~~~~^~~~~~~~~~~
+DATA_INTERFACE.c(71): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        uint8_t address_receiver; 
+                ^
+DATA_INTERFACE.c(67): warning: variable 'header' set but not used [-Wunused-but-set-variable]
+        uint8_t header;
+                ^
+DATA_INTERFACE.c(109): warning: variable 'checksum' may be uninitialized when used here [-Wconditional-uninitialized]
+                checksum = (checksum << 8) | MODBUS_read_byte(data, pos);
+                            ^~~~~~~~
+DATA_INTERFACE.c(106): note: initialize the variable 'checksum' to silence this warning
+        uint32_t checksum;
+                         ^
+                          = 0
+DATA_INTERFACE.c(82): warning: variable 'data_length' may be uninitialized when used here [-Wconditional-uninitialized]
+                data_length = (data_length << 8) | MODBUS_read_byte(data, pos);
+                               ^~~~~~~~~~~
+DATA_INTERFACE.c(79): note: initialize the variable 'data_length' to silence this warning
+        uint16_t data_length;
+                            ^
+                             = 0
+DATA_INTERFACE.c(116): warning: variable 'end' may be uninitialized when used here [-Wconditional-uninitialized]
+                end = (end << 8) | MODBUS_read_byte(data, pos);
+                       ^~~
+DATA_INTERFACE.c(113): note: initialize the variable 'end' to silence this warning
+        uint16_t end;
+                    ^
+                     = 0
+DATA_INTERFACE.c(183): warning: format specifies type 'unsigned int *' but the argument has type 'uint8_t *' (aka 'unsigned char *') [-Wformat]
+        sscanf(array, "%x",&byte);
+                       ~~  ^~~~~
+                       %s
+DATA_INTERFACE.c(199): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
                 crc = i;
                     ~ ^
-DATA_INTERFACE.c(76): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
+DATA_INTERFACE.c(204): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
         };
          ^
-DATA_INTERFACE.c(84): warning: no newline at end of file [-Wnewline-eof]
+DATA_INTERFACE.c(212): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-14 warnings generated.
+25 warnings generated.
 compiling DATA_INTERFACE.c...
 assembling startup_MDR1986BE4.s...
 RTE/Device/MDR1986BE4/system_MDR1986BE4.c(23): warning: In file included from...
@@ -456,8 +514,8 @@ typedef struct
 4 warnings generated.
 compiling MDR32F9Qx_uart.c...
 linking...
-Program Size: Code=11808 RO-data=828 RW-data=4 ZI-data=5360  
-".\Objects\NIR.axf" - 0 Error(s), 89 Warning(s).
+Program Size: Code=19752 RO-data=816 RW-data=8 ZI-data=5560  
+".\Objects\NIR.axf" - 0 Error(s), 103 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -492,11 +550,11 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.5
-      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/startup_MDR1986BE4.s
-      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
-      Include file:  Config/MDR32F9Qx_config.h
-      Include file:  Libraries/CMSIS/CM0/CoreSupport/core_cm0.h
       Include file:  Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.h
+      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/startup_MDR1986BE4.s
+      Include file:  Libraries/CMSIS/CM0/CoreSupport/core_cm0.h
+      Include file:  Config/MDR32F9Qx_config.h
+      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
 
    * Component: Keil::Drivers:ADC:1.5
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_adc.c
@@ -511,12 +569,12 @@ Package Vendor: Keil
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_rst_clk.c
 
    * Component: Keil::Drivers:TIMER:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_timer.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_timer.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_timer.h
 
    * Component: Keil::Drivers:UART:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_uart.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_uart.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_uart.h
 Build Time Elapsed:  00:00:03
 </pre>
 </body>
