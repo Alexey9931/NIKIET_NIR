@@ -5,6 +5,7 @@
 ".\objects\uart.o"
 ".\objects\ports.o"
 ".\objects\data_interface.o"
+".\objects\register_space.o"
 ".\objects\startup_mdr1986be4.o"
 ".\objects\system_mdr1986be4.o"
 ".\objects\mdr32f9qx_adc.o"

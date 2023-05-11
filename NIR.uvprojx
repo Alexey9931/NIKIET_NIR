@@ -444,6 +444,11 @@
               <FileType>5</FileType>
               <FilePath>.\REGISTER_SPACE.h</FilePath>
             </File>
+            <File>
+              <FileName>REGISTER_SPACE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\REGISTER_SPACE.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

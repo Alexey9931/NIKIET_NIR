@@ -19,6 +19,6 @@ void ADC_Channel_Init(void);
 void ADC_start_mesuare(void);
 void ADC_IRQHandler(void);
 float averaging(float *U);
-
+uint32_t averaging_result(uint32_t RESULT[]);
 
 #endif /*__ADC_H */

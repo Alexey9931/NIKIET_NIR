@@ -13,4 +13,6 @@
   C:\Users\shishov\AppData\Local\Arm\Packs\Keil\MDR1986BExx\1.5\Libraries\MDR1986BE4_StdPeriph_Driver\inc\MDR32F9Qx_port.h \
   C:\Users\shishov\AppData\Local\Arm\Packs\Keil\MDR1986BExx\1.5\Libraries\MDR1986BE4_StdPeriph_Driver\inc\MDR32F9Qx_rst_clk.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h UART.h \
-  C:\Users\shishov\AppData\Local\Arm\Packs\Keil\MDR1986BExx\1.5\Libraries\MDR1986BE4_StdPeriph_Driver\inc\MDR32F9Qx_uart.h
+  C:\Users\shishov\AppData\Local\Arm\Packs\Keil\MDR1986BExx\1.5\Libraries\MDR1986BE4_StdPeriph_Driver\inc\MDR32F9Qx_uart.h \
+  REGISTER_SPACE.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h

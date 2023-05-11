@@ -8,13 +8,14 @@ receiver_chassis_addr - адрес шасси приемника
 sender_mod_addr - адрес модуля отправителя
 sender_chassis_addr - адрес шасси отправителя
 cmd - код команды
-data[] - массив с данными
+data[] - массив байтов данных
 data_size - размер в байтах
 device - кто отправляет данные (ПМ - 0, УМ - 1)
 */
-void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, uint8_t sender_mod_addr, uint8_t sender_chassis_addr, uint8_t cmd, uint8_t *data, uint8_t data_size, uint8_t device)
+void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, uint8_t sender_mod_addr, uint8_t sender_chassis_addr, uint8_t cmd, uint8_t data[], uint8_t data_size, uint8_t device)
 {
-	uint8_t DATA[200] = {0};
+	uint8_t DATA[200] = {0};//отправляемый массив байтов
+	
 	uint8_t header = 0x55; //заголовок
 	uint8_t address_receiver; //адрес получателя
 	uint8_t address_sender; //адрес отправителя
@@ -22,13 +23,15 @@ void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, 
 	uint8_t service_byte; //сервисный байт
 	uint32_t checksum; //контрольная сумма
 	uint16_t end = 0xAAAA; //признак конца пакета
-	
-	uint8_t data_in_bytes[100] = {0};
-	char array[10] = {0};
-	
+
+	DATA[0] = header;
 	address_receiver = (receiver_chassis_addr << 4) | receiver_mod_addr;
+	DATA[1] = address_receiver;
 	address_sender = (sender_chassis_addr << 4) | sender_mod_addr;
+	DATA[2] = address_sender;
 	data_length = 10 + data_size;
+	DATA[3] = data_length & 0xFF;
+	DATA[4] = data_length>>8;
 	if (device == 0)
 	{
 		service_byte = 0x1; //пока взял такой - "все исправно, управл по шине 1"
@@ -37,90 +40,82 @@ void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, 
 	{
 		service_byte = 0x80; //пока взял такой - "все исправно, готов к управлению"
 	}
+	DATA[5] = service_byte;
+	DATA[6] = cmd;
+	for (uint8_t len = 0;len < data_size; len++)
+	{
+		DATA[7+len] = data[len];
+	}
 	
 	uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
 	buf[0] = address_sender;
-	buf[1] = data_length >> 8;
-	buf[2] = data_length & 0xFF;
+	buf[1] = data_length & 0xFF;
+	buf[2] = data_length >> 8;
 	buf[3] = service_byte;
 	buf[4] = cmd;
 	for (int k = 0; k < data_size; k++)
 	{
 		buf[k+5] = data[k];
-		sprintf(array,"%x ",data[k]);//операция для преобразования строки данных в поток байтов
-		strcat(data_in_bytes,array);
 	}
 	checksum = Find_Crc32(buf, 5 + data_size);
+	DATA[7+data_size] = checksum & 0xFF;
+	DATA[7+data_size+1] = checksum>>8;
+	DATA[7+data_size+2] = checksum>>16;
+	DATA[7+data_size+3] = checksum>>24;
 	
-	sprintf(DATA,"%x| %x| %x| %x %x| %x| %x| %s| %x %x %x %x| %x %x",header, address_receiver, address_sender, buf[1], buf[2], service_byte, cmd, data_in_bytes, (uint8_t)(checksum>>24), (uint8_t)(checksum>>16), (uint8_t)(checksum>>8), (uint8_t)checksum, (uint8_t)(end>>8), (uint8_t)end);
+	DATA[7+data_size+4] = end & 0xFF;
+	DATA[7+data_size+5] = end>>8;
 
-	strcat(DATA, "\r");
-	UART_send_string(DATA);
+	UART_send_array_bytes(DATA, 13+data_size);
 }
 /*
 Ф-ция для распознавания запроса и отправки ответа
 */
-uint8_t MODBUS_read_request_and_send_response(uint8_t *data, uint8_t data_size)
+uint8_t MODBUS_read_request_and_send_response(uint8_t data[], uint8_t data_size)
 {
-	uint8_t pos = 0; //позиция курсора в строке
 	//заголовок
 	uint8_t header;
-	header = MODBUS_read_byte(data,pos);
-	pos += 5;
+	header = data[0];
 	//адрес получателя
 	uint8_t address_receiver; 
-	address_receiver = MODBUS_read_byte(data,pos);
-	pos += 5;
+	address_receiver = data[1];	
 	//адрес отправителя
 	uint8_t address_sender;
-	address_sender = MODBUS_read_byte(data,pos);
-	pos += 5;
+	address_sender = data[2];
 	//длина пакета
-	uint16_t data_length;
-	for (uint8_t len = 0; len < 2; len++)
+	uint16_t data_length = 0;
+	for (int len = 1; len >= 0; len--)
 	{
-		data_length = (data_length << 8) | MODBUS_read_byte(data, pos);
-		pos += 5;
+		data_length = data_length << 8;
+		data_length |= data[3+len];
 	}
 	//сервисный байт
 	uint8_t service_byte;
-	service_byte = MODBUS_read_byte(data,pos);
-	pos += 5;
+	service_byte = data[5];
 	//код команды 
 	uint8_t cmd;
-	cmd = MODBUS_read_byte(data,pos);
-	pos += 5;
+	cmd = data[6];
 	//поле данных
-	uint8_t DATA_length = (data_size-65)/5; //кол-во байт данных
+	uint8_t DATA_length = data_size-13; //кол-во байт данных
 	uint8_t DATA[DATA_length]; // массив поля данных в байтах
-//char array[10];
-//uint8_t data_in_bytes[100] = {0};
 	for (uint8_t len = 0; len < DATA_length; len++)
 	{
-		DATA[len] = MODBUS_read_byte(data, pos);
-//sprintf(array,"%x ",DATA[len]);//операция для преобразования строки данных в поток байтов
-//strcat(data_in_bytes,array);
-		pos += 5;
+		DATA[len] = data[7+len];
 	}
 	//контрольная сумма
-	uint32_t checksum;
-	for (uint8_t len = 0; len < 4; len++)
+	uint32_t checksum = 0;
+	for (int len = 3; len >= 0; len--)
 	{
-		checksum = (checksum << 8) | MODBUS_read_byte(data, pos);
-		pos += 5;
+		checksum = checksum << 8;
+		checksum |= data[7+DATA_length+len];
 	}
 	//признак конца пакета
-	uint16_t end;
-	for (uint8_t len = 0; len < 2; len++)
+	uint16_t end = 0;
+	for (int len = 1; len >= 0; len--)
 	{
-		end = (end << 8) | MODBUS_read_byte(data, pos);
-		pos += 5;
+		end = end << 8;
+		end |= data[11+DATA_length+len];
 	}
-//	char rx_data[200] = {0};
-//	sprintf(rx_data,"%x| %x| %x| %x %x| %x| %x| %s| %x %x %x %x| %x %x\r",header, address_receiver, address_sender, (uint8_t)(data_length>>8), (uint8_t)data_length, service_byte, cmd, data_in_bytes, (uint8_t)(checksum>>24), (uint8_t)(checksum>>16), (uint8_t)(checksum>>8), (uint8_t)checksum, (uint8_t)(end>>8), (uint8_t)end);
-
-//	UART_send_string(rx_data);
-	
 	// вычисление контрольной суммы и сравнение ее с той, что в телеграмме
 	/*
 	для примера для строки данных "0x55 0x11 0x22 0x10 0x11 0x80 0x01 0x22 0x5E 0xAD 0xC9 0xC3 0xAA 0xAA " - CRC = 0x5E 0xAD 0xC9 0xC3
@@ -128,8 +123,8 @@ uint8_t MODBUS_read_request_and_send_response(uint8_t *data, uint8_t data_size)
 	uint32_t real_checksum;
 	uint8_t buf[5 + DATA_length];//буффер для расчета контрольной суммы
 	buf[0] = address_sender;
-	buf[1] = data_length >> 8;
-	buf[2] = data_length & 0xFF;
+	buf[1] = data_length & 0xFF;
+	buf[2] = data_length >> 8;
 	buf[3] = service_byte;
 	buf[4] = cmd;
 	for (int k = 0; k < DATA_length; k++)
@@ -137,28 +132,72 @@ uint8_t MODBUS_read_request_and_send_response(uint8_t *data, uint8_t data_size)
 		buf[k+5] = DATA[k];
 	}
 	real_checksum = Find_Crc32(buf, 5 + DATA_length);
-	
+	//если контрольная сумма не верна, то выход из функции
 	if (real_checksum != checksum)
 	{
 		return 0;
 	}
-	uint8_t SendBuf[4];
+	//отправка ответа
+	uint8_t SendBuf[16];
 	switch (cmd)
 	{
 		case TYPE:
+			//PLC_SoftVer
+			for(int i = 0; i < 4; i++)
+			{
+				SendBuf[i] = read_register(0, 4, COMMON)[i];
+			}
+			//PLC_DeviceType
+			for(int i = 0; i < 4; i++)
+			{
+				SendBuf[i+4] = read_register(1160, 4, COMMON)[i];
+			}
+			//PLC_Config
+			for(int i = 0; i < 4; i++)
+			{
+				SendBuf[i+8] = read_register(4, 2, COMMON)[i];
+			}
+			//PLC_SerialNumber
+			for(int i = 0; i < 4; i++)
+			{
+				SendBuf[i+10] = read_register(1164, 4, COMMON)[i];
+			}
+			MODBUS_send_data(address_sender&0xF , address_sender>>4, address_receiver&0xF , address_receiver>>4, TYPE, SendBuf, 14, 0);
 			break;
 		case INIT:
-			SendBuf[0] = (uint8_t)(PLC_SerialNumber>>24);
-			SendBuf[1] = (uint8_t)(PLC_SerialNumber>>16);
-			SendBuf[2] = (uint8_t)(PLC_SerialNumber>>8);
-			SendBuf[3] = (uint8_t)(PLC_SerialNumber);
-			MODBUS_send_data(address_receiver&0xF , address_receiver>>4, address_sender&0xF , address_sender>>4, INIT, SendBuf, 4, 0);
+			for(int i = 0; i < 4; i++)
+			{
+				SendBuf[i] = read_register(1164, 4, COMMON)[i];
+			}
+			MODBUS_send_data(address_sender&0xF , address_sender>>4, address_receiver&0xF , address_receiver>>4, INIT, SendBuf, 4, 0);
 			break;
-		case READ:
+		case READ:	
+			//если адрес регистра равен 1662 
+			if((DATA[0] == 0x7E)&&(DATA[1] == 0x06))
+			{
+				for(int i = 0; i < 16; i++)
+				{
+					SendBuf[i] = read_register(1662, 16, MPA)[i];
+				}	
+				MODBUS_send_data(address_sender&0xF , address_sender>>4, address_receiver&0xF , address_receiver>>4, READ, SendBuf, 16, 0);
+			}
+			else if ((DATA[0] == 0xAE)&&(DATA[1] == 0x06))
+			{
+				for(int i = 0; i < 16; i++)
+				{
+					SendBuf[i] = read_register(1710, 16, MPA)[i];
+				}				
+				MODBUS_send_data(address_sender&0xF , address_sender>>4, address_receiver&0xF , address_receiver>>4, READ, SendBuf, 16, 0);
+			}
 			break;
 		case WRITE:
 			break;
 		case RESET:
+			SendBuf[0] = 0x04;
+			MODBUS_send_data(address_sender&0xF , address_sender>>4, address_receiver&0xF , address_receiver>>4, RESET, SendBuf, 1, 0);
+			//сброс всех регистров
+			//инициализация пространства регистров
+			registers_ini();
 			break;
 		case CONFIG:
 			break;
@@ -201,7 +240,7 @@ uint_least32_t Find_Crc32(unsigned char *buf, size_t len)
 			crc = crc & 1 ? (crc >> 1) ^ 0xEDB88320UL : crc >> 1;
 
 		crc_table[i] = crc;
-	};
+	}
 
 	crc = 0xFFFFFFFFUL;
 

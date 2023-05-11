@@ -13,6 +13,8 @@ int main(void)
 	ADC_Channel_Init();
 	TIMER1_init();
 	UARTInit();
+	//инициализация пространства регистров
+	registers_ini();
 	//UART_send_string("Ch0\tCh1\tCh2\tCh3\tCh4\tCh5\tCh6\tCh7\t\r");
 
 	while(1)

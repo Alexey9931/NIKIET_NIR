@@ -22,7 +22,7 @@ Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
 D:\Gorlov\NIR\NIR.uvprojx
-Project File Date:  03/15/2023
+Project File Date:  03/24/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.18', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
@@ -60,10 +60,14 @@ main.c(5): warning: In file included from...
 #endif /*__DATA_INTERFACE_H */
                               ^
 main.c(6): warning: In file included from...
-./REGISTER_SPACE.h(10): warning: no newline at end of file [-Wnewline-eof]
+./REGISTER_SPACE.h(20): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void registers_ini();
+                  ^
+                   void
+./REGISTER_SPACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__REGISTER_SPACE_H */
                               ^
-7 warnings generated.
+8 warnings generated.
 compiling main.c...
 TIMER.c(1): warning: In file included from...
 ./TIMER.h(5): warning: In file included from...
@@ -90,9 +94,6 @@ TIMER.c(1): warning: In file included from...
 ./TIMER.h(16): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__TIMER_H */
                      ^
-TIMER.c(56): warning: unused variable 'data' [-Wunused-variable]
-        uint8_t data[] = "123456789";
-                ^
 TIMER.c(4): warning: no previous extern declaration for non-static variable 'TIMERInitStruct' [-Wmissing-variable-declarations]
 TIMER_CntInitTypeDef TIMERInitStruct;
                      ^
@@ -111,7 +112,7 @@ TIMER_ChnOutInitTypeDef sTIM_ChnOutInit;
 TIMER.c(6): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 TIMER_ChnOutInitTypeDef sTIM_ChnOutInit;
 ^
-8 warnings generated.
+7 warnings generated.
 compiling TIMER.c...
 ADC.c(1): warning: In file included from...
 ./ADC.h(5): warning: In file included from...
@@ -133,57 +134,108 @@ ADC.c(1): warning: In file included from...
 ./ADC.h(24): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__ADC_H */
                    ^
-ADC.c(66): warning: implicitly declaring library function 'sprintf' with type 'int (char *, const char *, ...)' [-Wimplicit-function-declaration]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ^
-ADC.c(66): note: include the header <stdio.h> or explicitly provide a declaration for 'sprintf'
-ADC.c(66): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(79): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(92): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(105): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(118): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(131): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(144): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(157): warning: implicit conversion increases floating-point precision: 'float' to 'double' [-Wdouble-promotion]
-                        sprintf(V, "%.4f\t", averaging(U));
-                        ~~~~~~~              ^~~~~~~~~~~~
-ADC.c(192): warning: no newline at end of file [-Wnewline-eof]
-}*/
-   ^
-ADC.c(169): warning: variable 'result' is uninitialized when used here [-Wuninitialized]
+ADC.c(2): warning: In file included from...
+./REGISTER_SPACE.h(20): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void registers_ini();
+                  ^
+                   void
+./REGISTER_SPACE.h(22): warning: no newline at end of file [-Wnewline-eof]
+#endif /*__REGISTER_SPACE_H */
+                              ^
+ADC.c(75): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(76): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(96): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(97): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(117): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(118): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(138): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(139): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(159): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(160): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(180): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(181): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(201): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(202): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(218): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(219): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(222): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[0] = (uint8_t)((int)averaging(U)&0xFF);
+                                                            ^~~~~~~~~~~~
+ADC.c(223): warning: cast from function call of type 'float' to non-matching type 'int' [-Wbad-function-cast]
+                        AI_PhysQuantInt[1] = (uint8_t)((int)averaging(U)>>8);
+                                                            ^~~~~~~~~~~~
+ADC.c(71): warning: variable 'RESULT' may be uninitialized when used here [-Wconditional-uninitialized]
+                        AI_CodeADC[0] = (uint8_t)(RESULT&0xFF);
+                                                  ^~~~~~
+ADC.c(50): note: initialize the variable 'RESULT' to silence this warning
+        uint32_t RESULT;
+                       ^
+                        = 0
+ADC.c(237): warning: variable 'result' is uninitialized when used here [-Wuninitialized]
                 result += U[i];
                 ^~~~~~
-ADC.c(166): note: initialize the variable 'result' to silence this warning
+ADC.c(234): note: initialize the variable 'result' to silence this warning
         float result;
                     ^
                      = 0.0
-ADC.c(4): warning: no previous extern declaration for non-static variable 'ADC3' [-Wmissing-variable-declarations]
+ADC.c(270): warning: no newline at end of file [-Wnewline-eof]
+}*/
+   ^
+ADC.c(248): warning: variable 'result' is uninitialized when used here [-Wuninitialized]
+                result += RESULT[i];
+                ^~~~~~
+ADC.c(245): note: initialize the variable 'result' to silence this warning
+        uint32_t result;
+                       ^
+                        = 0
+ADC.c(5): warning: no previous extern declaration for non-static variable 'ADC3' [-Wmissing-variable-declarations]
 ADCx_InitTypeDef ADC3;
                  ^
-ADC.c(4): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+ADC.c(5): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 ADCx_InitTypeDef ADC3;
 ^
-ADC.c(6): warning: no previous extern declaration for non-static variable 'ADC' [-Wmissing-variable-declarations]
+ADC.c(7): warning: no previous extern declaration for non-static variable 'ADC' [-Wmissing-variable-declarations]
 ADC_InitTypeDef ADC;
                 ^
-ADC.c(6): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+ADC.c(7): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 ADC_InitTypeDef ADC;
 ^
-16 warnings generated.
+ADC.c(9): warning: unused variable 'TX_data' [-Wunused-variable]
+static char TX_data[100];
+            ^
+30 warnings generated.
 compiling ADC.c...
 UART.c(1): warning: In file included from...
 ./UART.h(5): warning: In file included from...
@@ -206,20 +258,19 @@ UART.c(1): warning: In file included from...
 C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Libraries/MDR1986BE4_StdPeriph_Driver/inc\MDR32F9Qx_uart.h(31): warning: padding size of 'UART_InitTypeDef' with 2 bytes to alignment boundary [-Wpadded]
 typedef struct
         ^
-UART.c(11): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+UART.c(14): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
 UART_InitTypeDef UART_InitStructure;
                  ^
-UART.c(39): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+UART.c(43): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
         for (int i = 0; i < strlen(data); i++)
                         ~ ^ ~~~~~~~~~~~~
-UART.c(57): warning: implicitly declaring library function 'sprintf' with type 'int (char *, const char *, ...)' [-Wimplicit-function-declaration]
-                                sprintf(RX_byte,"%c",rx_byte);
+UART.c(64): warning: implicit conversion loses integer precision: 'uint16_t' (aka 'unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+                        rx_byte = UART_ReceiveData(MDR_UART1);  
+                                ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+UART.c(72): warning: implicit declaration of function 'MODBUS_read_request_and_send_response' is invalid in C99 [-Wimplicit-function-declaration]
+                                MODBUS_read_request_and_send_response(RX_bytes, RX_bytes_counter+1);                            
                                 ^
-UART.c(57): note: include the header <stdio.h> or explicitly provide a declaration for 'sprintf'
-UART.c(60): warning: implicit declaration of function 'MODBUS_read_request_and_send_response' is invalid in C99 [-Wimplicit-function-declaration]
-                                MODBUS_read_request_and_send_response(rx_data, rx_data_size);
-                                ^
-UART.c(72): warning: no newline at end of file [-Wnewline-eof]
+UART.c(85): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
 8 warnings generated.
@@ -262,107 +313,109 @@ DATA_INTERFACE.c(1): warning: In file included from...
 #endif /*__DATA_INTERFACE_H */
                               ^
 DATA_INTERFACE.c(2): warning: In file included from...
-./REGISTER_SPACE.h(10): warning: no newline at end of file [-Wnewline-eof]
+./REGISTER_SPACE.h(20): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void registers_ini();
+                  ^
+                   void
+./REGISTER_SPACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__REGISTER_SPACE_H */
                               ^
-DATA_INTERFACE.c(29): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+DATA_INTERFACE.c(28): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
         address_receiver = (receiver_chassis_addr << 4) | receiver_mod_addr;
                          ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
 DATA_INTERFACE.c(30): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
         address_sender = (sender_chassis_addr << 4) | sender_mod_addr;
                        ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(41): warning: variable length array used [-Wvla]
+DATA_INTERFACE.c(50): warning: variable length array used [-Wvla]
         uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
                     ~~~~^~~~~~~~~
-DATA_INTERFACE.c(51): warning: implicitly declaring library function 'strcat' with type 'char *(char *, const char *)' [-Wimplicit-function-declaration]
-                strcat(data_in_bytes,array);
-                ^
-DATA_INTERFACE.c(51): note: include the header <string.h> or explicitly provide a declaration for 'strcat'
-DATA_INTERFACE.c(51): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-                strcat(data_in_bytes,array);
-                       ^~~~~~~~~~~~~
-DATA_INTERFACE.c(55): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-        sprintf(DATA,"%x| %x| %x| %x %x| %x| %x| %s| %x %x %x %x| %x %x",header, address_receiver, address_sender, buf[1], buf[2], service_byte, cmd, data_in_bytes, (uint8_t)(checksum>>24), (uint8_t)(checksum>>16), (uint8_t)(checksum>>8), (uint8_t)checksum, (uint8_t)(end>>8), (uint8_t)end);
-                ^~~~
-C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
-extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
-                                                  ^
-DATA_INTERFACE.c(57): warning: passing 'uint8_t[200]' (aka 'unsigned char[200]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-        strcat(DATA, "\r");
-               ^~~~
-DATA_INTERFACE.c(58): warning: implicit declaration of function 'UART_send_string' is invalid in C99 [-Wimplicit-function-declaration]
-        UART_send_string(DATA);
+DATA_INTERFACE.c(62): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+        DATA[7+data_size+1] = checksum>>8;
+                            ~ ~~~~~~~~^~~
+DATA_INTERFACE.c(63): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+        DATA[7+data_size+2] = checksum>>16;
+                            ~ ~~~~~~~~^~~~
+DATA_INTERFACE.c(69): warning: implicit declaration of function 'UART_send_array_bytes' is invalid in C99 [-Wimplicit-function-declaration]
+        UART_send_array_bytes(DATA, 13+data_size);
         ^
-DATA_INTERFACE.c(41): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+DATA_INTERFACE.c(50): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
         uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
                 ^
-DATA_INTERFACE.c(36): warning: variable 'service_byte' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+DATA_INTERFACE.c(39): warning: variable 'service_byte' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
         else if (device == 1)
                  ^~~~~~~~~~~
-DATA_INTERFACE.c(45): note: uninitialized use occurs here
-        buf[3] = service_byte;
-                 ^~~~~~~~~~~~
-DATA_INTERFACE.c(36): note: remove the 'if' if its condition is always true
+DATA_INTERFACE.c(43): note: uninitialized use occurs here
+        DATA[5] = service_byte;
+                  ^~~~~~~~~~~~
+DATA_INTERFACE.c(39): note: remove the 'if' if its condition is always true
         else if (device == 1)
              ^~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(22): note: initialize the variable 'service_byte' to silence this warning
+DATA_INTERFACE.c(23): note: initialize the variable 'service_byte' to silence this warning
         uint8_t service_byte; //сервисный байт
                             ^
                              = '\0'
-DATA_INTERFACE.c(82): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
-                data_length = (data_length << 8) | MODBUS_read_byte(data, pos);
-                            ~ ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(95): warning: variable length array used [-Wvla]
+DATA_INTERFACE.c(89): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+                data_length = data_length << 8;
+                            ~ ~~~~~~~~~~~~^~~~
+DATA_INTERFACE.c(100): warning: variable length array used [-Wvla]
         uint8_t DATA[DATA_length]; // массив поля данных в байтах
                      ^~~~~~~~~~~
 DATA_INTERFACE.c(116): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
-                end = (end << 8) | MODBUS_read_byte(data, pos);
-                    ~ ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DATA_INTERFACE.c(129): warning: variable length array used [-Wvla]
+                end = end << 8;
+                    ~ ~~~~^~~~
+DATA_INTERFACE.c(124): warning: variable length array used [-Wvla]
         uint8_t buf[5 + DATA_length];//буффер для расчета контрольной суммы
                     ~~~~^~~~~~~~~~~
-DATA_INTERFACE.c(71): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+DATA_INTERFACE.c(80): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
         uint8_t address_receiver; 
                 ^
-DATA_INTERFACE.c(67): warning: variable 'header' set but not used [-Wunused-but-set-variable]
+DATA_INTERFACE.c(77): warning: variable 'header' set but not used [-Wunused-but-set-variable]
         uint8_t header;
                 ^
-DATA_INTERFACE.c(109): warning: variable 'checksum' may be uninitialized when used here [-Wconditional-uninitialized]
-                checksum = (checksum << 8) | MODBUS_read_byte(data, pos);
-                            ^~~~~~~~
-DATA_INTERFACE.c(106): note: initialize the variable 'checksum' to silence this warning
-        uint32_t checksum;
-                         ^
-                          = 0
-DATA_INTERFACE.c(82): warning: variable 'data_length' may be uninitialized when used here [-Wconditional-uninitialized]
-                data_length = (data_length << 8) | MODBUS_read_byte(data, pos);
-                               ^~~~~~~~~~~
-DATA_INTERFACE.c(79): note: initialize the variable 'data_length' to silence this warning
-        uint16_t data_length;
-                            ^
-                             = 0
-DATA_INTERFACE.c(116): warning: variable 'end' may be uninitialized when used here [-Wconditional-uninitialized]
-                end = (end << 8) | MODBUS_read_byte(data, pos);
-                       ^~~
-DATA_INTERFACE.c(113): note: initialize the variable 'end' to silence this warning
-        uint16_t end;
-                    ^
-                     = 0
-DATA_INTERFACE.c(183): warning: format specifies type 'unsigned int *' but the argument has type 'uint8_t *' (aka 'unsigned char *') [-Wformat]
+DATA_INTERFACE.c(222): warning: format specifies type 'unsigned int *' but the argument has type 'uint8_t *' (aka 'unsigned char *') [-Wformat]
         sscanf(array, "%x",&byte);
                        ~~  ^~~~~
                        %s
-DATA_INTERFACE.c(199): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
+DATA_INTERFACE.c(238): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
                 crc = i;
                     ~ ^
-DATA_INTERFACE.c(204): warning: empty expression statement has no effect; remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
-        };
-         ^
-DATA_INTERFACE.c(212): warning: no newline at end of file [-Wnewline-eof]
+DATA_INTERFACE.c(251): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-25 warnings generated.
+20 warnings generated.
 compiling DATA_INTERFACE.c...
+REGISTER_SPACE.c(1): warning: In file included from...
+./REGISTER_SPACE.h(20): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void registers_ini();
+                  ^
+                   void
+./REGISTER_SPACE.h(22): warning: no newline at end of file [-Wnewline-eof]
+#endif /*__REGISTER_SPACE_H */
+                              ^
+REGISTER_SPACE.c(10): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        uint8_t PLC_Config[2] = {0x01,0x02};
+                ^
+REGISTER_SPACE.c(4): warning: no previous prototype for function 'registers_ini' [-Wmissing-prototypes]
+void registers_ini()
+     ^
+./REGISTER_SPACE.h(20): note: this declaration is not a prototype; add 'void' to make it a prototype for a zero-parameter function
+void registers_ini();
+     ^
+                   void
+REGISTER_SPACE.c(4): warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+void registers_ini()
+                  ^
+REGISTER_SPACE.c(47): warning: variable length array used [-Wvla]
+        uint8_t result[data_size];
+                       ^~~~~~~~~
+REGISTER_SPACE.c(64): warning: address of stack memory associated with local variable 'result' returned [-Wreturn-stack-address]
+        return result;
+               ^~~~~~
+REGISTER_SPACE.c(65): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+8 warnings generated.
+compiling REGISTER_SPACE.c...
 assembling startup_MDR1986BE4.s...
 RTE/Device/MDR1986BE4/system_MDR1986BE4.c(23): warning: In file included from...
 C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Config\MDR32F9Qx_config.h(46): warning: '__CC_ARM' is not defined, evaluates to 0 [-Wundef]
@@ -514,8 +567,8 @@ typedef struct
 4 warnings generated.
 compiling MDR32F9Qx_uart.c...
 linking...
-Program Size: Code=19752 RO-data=816 RW-data=8 ZI-data=5560  
-".\Objects\NIR.axf" - 0 Error(s), 103 Warning(s).
+Program Size: Code=10524 RO-data=252 RW-data=4 ZI-data=8576  
+".\Objects\NIR.axf" - 0 Error(s), 120 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -550,31 +603,31 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.5
-      Include file:  Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.h
+      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
       Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/startup_MDR1986BE4.s
+      Include file:  Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.h
       Include file:  Libraries/CMSIS/CM0/CoreSupport/core_cm0.h
       Include file:  Config/MDR32F9Qx_config.h
-      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
 
    * Component: Keil::Drivers:ADC:1.5
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_adc.c
       Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_adc.h
 
    * Component: Keil::Drivers:PORT:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_port.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_port.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_port.h
 
    * Component: Keil::Drivers:RST_CLK:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_rst_clk.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_rst_clk.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_rst_clk.h
 
    * Component: Keil::Drivers:TIMER:1.5
-      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_timer.c
       Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_timer.h
+      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_timer.c
 
    * Component: Keil::Drivers:UART:1.5
-      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_uart.c
       Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_uart.h
+      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_uart.c
 Build Time Elapsed:  00:00:03
 </pre>
 </body>

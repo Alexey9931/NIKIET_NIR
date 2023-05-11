@@ -13,8 +13,8 @@
 #define CONFIG 0x05
 
 
-void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, uint8_t sender_mod_addr, uint8_t sender_chassis_addr, uint8_t cmd, uint8_t *data, uint8_t data_size, uint8_t device);
-uint8_t MODBUS_read_request_and_send_response(uint8_t *data, uint8_t data_size);
+void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, uint8_t sender_mod_addr, uint8_t sender_chassis_addr, uint8_t cmd, uint8_t data[], uint8_t data_size, uint8_t device);
+uint8_t MODBUS_read_request_and_send_response(uint8_t data[], uint8_t data_size);
 uint8_t MODBUS_read_byte(uint8_t *data, uint8_t pos);
 uint_least32_t Find_Crc32(unsigned char *buf, size_t len);
 
