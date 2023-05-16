@@ -44,6 +44,16 @@ C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Config/MDR32F9Qx_b
 #define USE_MDR1986BE4 1
         ^
 main.c(1): warning: In file included from...
+./ADC.h(10): warning: In file included from...
+./UART.h(13): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void uart_flush();
+               ^
+                void
+./UART.h(15): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint32_t uart_read_pos();
+                      ^
+                       void
+main.c(1): warning: In file included from...
 ./ADC.h(24): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__ADC_H */
                    ^
@@ -56,6 +66,10 @@ main.c(4): warning: In file included from...
 #endif /*__PORTS_H */
                      ^
 main.c(5): warning: In file included from...
+./DATA_INTERFACE.h(17): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint8_t MODBUS_read_request_and_send_response();
+                                             ^
+                                              void
 ./DATA_INTERFACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__DATA_INTERFACE_H */
                               ^
@@ -67,7 +81,7 @@ void registers_ini();
 ./REGISTER_SPACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__REGISTER_SPACE_H */
                               ^
-8 warnings generated.
+11 warnings generated.
 compiling main.c...
 TIMER.c(1): warning: In file included from...
 ./TIMER.h(5): warning: In file included from...
@@ -85,6 +99,16 @@ C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Config/MDR32F9Qx_b
 <command line>(4): note: previous definition is here
 #define USE_MDR1986BE4 1
         ^
+TIMER.c(1): warning: In file included from...
+./TIMER.h(8): warning: In file included from...
+./UART.h(13): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void uart_flush();
+               ^
+                void
+./UART.h(15): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint32_t uart_read_pos();
+                      ^
+                       void
 TIMER.c(1): warning: In file included from...
 ./TIMER.h(9): warning: In file included from...
 ./ADC.h(24): warning: no newline at end of file [-Wnewline-eof]
@@ -112,7 +136,7 @@ TIMER_ChnOutInitTypeDef sTIM_ChnOutInit;
 TIMER.c(6): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 TIMER_ChnOutInitTypeDef sTIM_ChnOutInit;
 ^
-7 warnings generated.
+9 warnings generated.
 compiling TIMER.c...
 ADC.c(1): warning: In file included from...
 ./ADC.h(5): warning: In file included from...
@@ -130,6 +154,16 @@ C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Config/MDR32F9Qx_b
 <command line>(4): note: previous definition is here
 #define USE_MDR1986BE4 1
         ^
+ADC.c(1): warning: In file included from...
+./ADC.h(10): warning: In file included from...
+./UART.h(13): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void uart_flush();
+               ^
+                void
+./UART.h(15): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint32_t uart_read_pos();
+                      ^
+                       void
 ADC.c(1): warning: In file included from...
 ./ADC.h(24): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__ADC_H */
@@ -235,7 +269,7 @@ ADC_InitTypeDef ADC;
 ADC.c(9): warning: unused variable 'TX_data' [-Wunused-variable]
 static char TX_data[100];
             ^
-30 warnings generated.
+32 warnings generated.
 compiling ADC.c...
 UART.c(1): warning: In file included from...
 ./UART.h(5): warning: In file included from...
@@ -254,26 +288,52 @@ C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Config/MDR32F9Qx_b
 #define USE_MDR1986BE4 1
         ^
 UART.c(1): warning: In file included from...
+./UART.h(13): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+void uart_flush();
+               ^
+                void
+./UART.h(15): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint32_t uart_read_pos();
+                      ^
+                       void
+UART.c(1): warning: In file included from...
 ./UART.h(5): warning: In file included from...
 C:/Users/shishov/AppData/Local/Arm/Packs/Keil/MDR1986BExx/1.5/Libraries/MDR1986BE4_StdPeriph_Driver/inc\MDR32F9Qx_uart.h(31): warning: padding size of 'UART_InitTypeDef' with 2 bytes to alignment boundary [-Wpadded]
 typedef struct
         ^
-UART.c(14): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+UART.c(18): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
 UART_InitTypeDef UART_InitStructure;
                  ^
-UART.c(43): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
-        for (int i = 0; i < strlen(data); i++)
-                        ~ ^ ~~~~~~~~~~~~
-UART.c(64): warning: implicit conversion loses integer precision: 'uint16_t' (aka 'unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
-                        rx_byte = UART_ReceiveData(MDR_UART1);  
-                                ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-UART.c(72): warning: implicit declaration of function 'MODBUS_read_request_and_send_response' is invalid in C99 [-Wimplicit-function-declaration]
-                                MODBUS_read_request_and_send_response(RX_bytes, RX_bytes_counter+1);                            
-                                ^
-UART.c(85): warning: no newline at end of file [-Wnewline-eof]
+UART.c(48): warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+        for (int i = 0; i < data_size; i++)
+                        ~ ^ ~~~~~~~~~
+UART.c(82): warning: no previous prototype for function 'uart_read_pos' [-Wmissing-prototypes]
+uint32_t uart_read_pos()
+         ^
+./UART.h(15): note: this declaration is not a prototype; add 'void' to make it a prototype for a zero-parameter function
+uint32_t uart_read_pos();
+         ^
+                       void
+UART.c(82): warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+uint32_t uart_read_pos()
+                      ^
+UART.c(86): warning: no previous prototype for function 'uart_flush' [-Wmissing-prototypes]
+void uart_flush()
+     ^
+./UART.h(13): note: this declaration is not a prototype; add 'void' to make it a prototype for a zero-parameter function
+void uart_flush();
+     ^
+                void
+UART.c(86): warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+void uart_flush()
+               ^
+UART.c(96): warning: implicit conversion loses integer precision: 'uint16_t' (aka 'unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+                        buffer[buffer_count] = UART_ReceiveData(MDR_UART1);     
+                                             ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+UART.c(121): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-8 warnings generated.
+13 warnings generated.
 compiling UART.c...
 PORTS.c(1): warning: In file included from...
 ./PORTS.h(4): warning: In file included from...
@@ -309,6 +369,10 @@ PORT_InitTypeDef GPIO_init_struct;
 6 warnings generated.
 compiling PORTS.c...
 DATA_INTERFACE.c(1): warning: In file included from...
+./DATA_INTERFACE.h(17): warning: this function declaration is not a prototype [-Wstrict-prototypes]
+uint8_t MODBUS_read_request_and_send_response();
+                                             ^
+                                              void
 ./DATA_INTERFACE.h(22): warning: no newline at end of file [-Wnewline-eof]
 #endif /*__DATA_INTERFACE_H */
                               ^
@@ -335,8 +399,8 @@ DATA_INTERFACE.c(62): warning: implicit conversion loses integer precision: 'uin
 DATA_INTERFACE.c(63): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
         DATA[7+data_size+2] = checksum>>16;
                             ~ ~~~~~~~~^~~~
-DATA_INTERFACE.c(69): warning: implicit declaration of function 'UART_send_array_bytes' is invalid in C99 [-Wimplicit-function-declaration]
-        UART_send_array_bytes(DATA, 13+data_size);
+DATA_INTERFACE.c(69): warning: implicit declaration of function 'uart_write' is invalid in C99 [-Wimplicit-function-declaration]
+        uart_write(DATA, 13+data_size);
         ^
 DATA_INTERFACE.c(50): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
         uint8_t buf[5 + data_size];//буффер для расчета контрольной суммы
@@ -354,35 +418,45 @@ DATA_INTERFACE.c(23): note: initialize the variable 'service_byte' to silence th
         uint8_t service_byte; //сервисный байт
                             ^
                              = '\0'
-DATA_INTERFACE.c(89): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
-                data_length = data_length << 8;
-                            ~ ~~~~~~~~~~~~^~~~
-DATA_INTERFACE.c(100): warning: variable length array used [-Wvla]
-        uint8_t DATA[DATA_length]; // массив поля данных в байтах
-                     ^~~~~~~~~~~
-DATA_INTERFACE.c(116): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
-                end = end << 8;
-                    ~ ~~~~^~~~
-DATA_INTERFACE.c(124): warning: variable length array used [-Wvla]
-        uint8_t buf[5 + DATA_length];//буффер для расчета контрольной суммы
-                    ~~~~^~~~~~~~~~~
-DATA_INTERFACE.c(80): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
-        uint8_t address_receiver; 
-                ^
-DATA_INTERFACE.c(77): warning: variable 'header' set but not used [-Wunused-but-set-variable]
-        uint8_t header;
-                ^
-DATA_INTERFACE.c(222): warning: format specifies type 'unsigned int *' but the argument has type 'uint8_t *' (aka 'unsigned char *') [-Wformat]
+DATA_INTERFACE.c(80): warning: implicit declaration of function 'uart_read' is invalid in C99 [-Wimplicit-function-declaration]
+        if (uart_read(2048, buffer) == 0)
+            ^
+DATA_INTERFACE.c(104): warning: implicit declaration of function 'uart_set_pos' is invalid in C99 [-Wimplicit-function-declaration]
+        uart_set_pos(data_size + uart_read_pos());
+        ^
+DATA_INTERFACE.c(104): warning: implicit declaration of function 'uart_read_pos' is invalid in C99 [-Wimplicit-function-declaration]
+        uart_set_pos(data_size + uart_read_pos());
+                                 ^
+DATA_INTERFACE.c(104): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+        uart_set_pos(data_size + uart_read_pos());
+                               ~ ^~~~~~~~~~~~~~~
+DATA_INTERFACE.c(105): warning: implicit declaration of function 'uart_write' is invalid in C99 [-Wimplicit-function-declaration]
+        uart_write(data, data_size);
+        ^
+DATA_INTERFACE.c(87): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        uint32_t count = 0;
+                 ^
+DATA_INTERFACE.c(74): warning: no previous prototype for function 'MODBUS_read_request_and_send_response' [-Wmissing-prototypes]
+uint8_t MODBUS_read_request_and_send_response()
+        ^
+./DATA_INTERFACE.h(17): note: this declaration is not a prototype; add 'void' to make it a prototype for a zero-parameter function
+uint8_t MODBUS_read_request_and_send_response();
+        ^
+                                              void
+DATA_INTERFACE.c(74): warning: this old-style function definition is not preceded by a prototype [-Wstrict-prototypes]
+uint8_t MODBUS_read_request_and_send_response()
+                                             ^
+DATA_INTERFACE.c(255): warning: format specifies type 'unsigned int *' but the argument has type 'uint8_t *' (aka 'unsigned char *') [-Wformat]
         sscanf(array, "%x",&byte);
                        ~~  ^~~~~
                        %s
-DATA_INTERFACE.c(238): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
+DATA_INTERFACE.c(271): warning: implicit conversion changes signedness: 'int' to 'uint_least32_t' (aka 'unsigned int') [-Wsign-conversion]
                 crc = i;
                     ~ ^
-DATA_INTERFACE.c(251): warning: no newline at end of file [-Wnewline-eof]
+DATA_INTERFACE.c(284): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-20 warnings generated.
+23 warnings generated.
 compiling DATA_INTERFACE.c...
 REGISTER_SPACE.c(1): warning: In file included from...
 ./REGISTER_SPACE.h(20): warning: this function declaration is not a prototype [-Wstrict-prototypes]
@@ -567,8 +641,8 @@ typedef struct
 4 warnings generated.
 compiling MDR32F9Qx_uart.c...
 linking...
-Program Size: Code=10524 RO-data=252 RW-data=4 ZI-data=8576  
-".\Objects\NIR.axf" - 0 Error(s), 120 Warning(s).
+Program Size: Code=8748 RO-data=252 RW-data=4 ZI-data=10432  
+".\Objects\NIR.axf" - 0 Error(s), 135 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -603,10 +677,10 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.5
-      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
-      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/startup_MDR1986BE4.s
-      Include file:  Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.h
       Include file:  Libraries/CMSIS/CM0/CoreSupport/core_cm0.h
+      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.c
+      Include file:  Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/system_MDR1986BE4.h
+      Source file:   Libraries/CMSIS/CM0/DeviceSupport/MDR1986BE4/startup/arm/startup_MDR1986BE4.s
       Include file:  Config/MDR32F9Qx_config.h
 
    * Component: Keil::Drivers:ADC:1.5
@@ -618,16 +692,16 @@ Package Vendor: Keil
       Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_port.h
 
    * Component: Keil::Drivers:RST_CLK:1.5
-      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_rst_clk.c
       Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_rst_clk.h
+      Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_rst_clk.c
 
    * Component: Keil::Drivers:TIMER:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_timer.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_timer.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_timer.h
 
    * Component: Keil::Drivers:UART:1.5
-      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_uart.h
       Source file:   Libraries/MDR1986BE4_StdPeriph_Driver/src/MDR32F9Qx_uart.c
+      Include file:  Libraries/MDR1986BE4_StdPeriph_Driver/inc/MDR32F9Qx_uart.h
 Build Time Elapsed:  00:00:03
 </pre>
 </body>

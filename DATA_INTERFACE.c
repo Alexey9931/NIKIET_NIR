@@ -66,13 +66,44 @@ void MODBUS_send_data(uint8_t receiver_mod_addr, uint8_t receiver_chassis_addr, 
 	DATA[7+data_size+4] = end & 0xFF;
 	DATA[7+data_size+5] = end>>8;
 
-	UART_send_array_bytes(DATA, 13+data_size);
+	uart_write(DATA, 13+data_size);
 }
 /*
 Ф-ция для распознавания запроса и отправки ответа
 */
-uint8_t MODBUS_read_request_and_send_response(uint8_t data[], uint8_t data_size)
+uint8_t MODBUS_read_request_and_send_response()
 {
+	uint8_t data[2048];//телеграмма
+	uint32_t data_size;//размер телеграммы
+	uint8_t buffer[2048];//весь считанный буфер
+	
+	if (uart_read(2048, buffer) == 0)
+	{
+		return 0;
+	}
+	//ожидаем пока не придет весь пакет (по заголовку определить длину пакета, и считать столько то байт)
+	
+	//распознавание границ пакета
+	uint32_t count = 0;
+	if (buffer[0] != 0x55)
+	{
+		return 0;
+	}
+	while ((buffer[count] != 0xAA)&&(buffer[count-1] != 0xAA))
+	{
+		if(count == 2049)
+		{
+			return 0;
+		}
+		data[count] = buffer[count];
+		count++;
+	}
+	data[count] = buffer[count];
+	data[count+1] = buffer[count+1];
+	data_size = count+2;
+	uart_set_pos(data_size + uart_read_pos());
+	uart_write(data, data_size);
+	/*
 	//заголовок
 	uint8_t header;
 	header = data[0];
@@ -116,10 +147,12 @@ uint8_t MODBUS_read_request_and_send_response(uint8_t data[], uint8_t data_size)
 		end = end << 8;
 		end |= data[11+DATA_length+len];
 	}
+	*/
 	// вычисление контрольной суммы и сравнение ее с той, что в телеграмме
 	/*
 	для примера для строки данных "0x55 0x11 0x22 0x10 0x11 0x80 0x01 0x22 0x5E 0xAD 0xC9 0xC3 0xAA 0xAA " - CRC = 0x5E 0xAD 0xC9 0xC3
 	*/
+	/*
 	uint32_t real_checksum;
 	uint8_t buf[5 + DATA_length];//буффер для расчета контрольной суммы
 	buf[0] = address_sender;
@@ -202,7 +235,7 @@ uint8_t MODBUS_read_request_and_send_response(uint8_t data[], uint8_t data_size)
 		case CONFIG:
 			break;
 	}
-	
+	*/
 	return 0;
 }
 /*
